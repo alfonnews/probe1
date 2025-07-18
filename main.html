@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Invitación Especial</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f4ff;
+        }
+        .screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 1;
+            transition: opacity 1s ease;
+            background-color: #f0f4ff;
+            text-align: center;
+        }
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            background-color: #4e7eff;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3a5fe0;
+        }
+        img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .contador {
+            font-size: 24px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<audio id="musica" src="musica.mp3" preload="auto" loop></audio>
+
+<div id="screen1" class="screen">
+    <h1>Tu invitación especial está a punto de abrirse...</h1>
+    <div id="contador" class="contador"></div>
+    <button onclick="mostrarInvitacion()">Abrir Invitación</button>
+</div>
+
+<div id="screen2" class="screen hidden">
+    <img src="invitacion.jpg" alt="Tu invitación especial">
+</div>
+
+<script>
+    // Música
+    const musica = document.getElementById('musica');
+
+    function mostrarInvitacion() {
+        const screen1 = document.getElementById('screen1');
+        const screen2 = document.getElementById('screen2');
+
+        screen1.classList.add('hidden');
+        screen2.classList.remove('hidden');
+        musica.play();
+    }
+
+    // Contador regresivo
+    const fechaEvento = new Date("2025-09-27T00:00:00").getTime();
+    const contador = document.getElementById("contador");
+
+    function actualizarContador() {
+        const ahora = new Date().getTime();
+        const distancia = fechaEvento - ahora;
+
+        if (distancia < 0) {
+            contador.textContent = "¡Hoy es el gran día!";
+            return;
+        }
+
+        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+        contador.textContent = `${dias} días, ${horas} h, ${minutos} min, ${segundos} seg`;
+    }
+
+    setInterval(actualizarContador, 1000);
+</script>
+
+</body>
+</html>
