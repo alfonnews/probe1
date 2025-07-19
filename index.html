@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Invitación Especial</title>
+    <title>Tu Invitación Especial</title>
     <style>
         body {
             margin: 0;
@@ -65,10 +65,14 @@
 
 <div id="screen2" class="screen hidden">
     <img src="invitacion.jpg" alt="Tu invitación especial">
+    <div style="margin-top: 20px;">
+        <a href="https://wa.me/34618210039?text=Confirmar%20asistencia" target="_blank">
+            <button>Confirmar por WhatsApp</button>
+        </a>
+    </div>
 </div>
 
 <script>
-    // Música
     const musica = document.getElementById('musica');
 
     function mostrarInvitacion() {
@@ -80,7 +84,6 @@
         musica.play();
     }
 
-    // Contador regresivo
     const fechaEvento = new Date("2025-09-27T00:00:00").getTime();
     const contador = document.getElementById("contador");
 
