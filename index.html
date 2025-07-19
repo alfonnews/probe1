@@ -65,9 +65,10 @@
 
 <div id="screen2" class="screen hidden">
     <img src="invitacion.jpg" alt="Tu invitación especial">
+    <div id="contador2" class="contador"></div>
     <div style="margin-top: 20px;">
-        <a href="https://wa.me/34618210039?text=Confirmar%20asistencia" target="_blank">
-            <button>Confirmar por WhatsApp</button>
+        <a href="https://wa.me/34618210039?text=Confirmo%20asistencia" target="_blank">
+            <button>Confirmar Asistencia</button>
         </a>
     </div>
 </div>
@@ -86,6 +87,7 @@
 
     const fechaEvento = new Date("2025-09-27T00:00:00").getTime();
     const contador = document.getElementById("contador");
+    const contador2 = document.getElementById("contador2");
 
     function actualizarContador() {
         const ahora = new Date().getTime();
@@ -93,6 +95,7 @@
 
         if (distancia < 0) {
             contador.textContent = "¡Hoy es el gran día!";
+            contador2.textContent = "¡Hoy es el gran día!";
             return;
         }
 
@@ -101,7 +104,9 @@
         const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
         const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-        contador.textContent = `${dias} días, ${horas} h, ${minutos} min, ${segundos} seg`;
+        const texto = `${dias} días, ${horas} h, ${minutos} min, ${segundos} seg`;
+        contador.textContent = texto;
+        contador2.textContent = texto;
     }
 
     setInterval(actualizarContador, 1000);
