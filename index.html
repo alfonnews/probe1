@@ -4,92 +4,71 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Invitación Especial</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Source Sans Pro', sans-serif;
-      background: #f7f4f1;
-      color: #333;
-      text-align: center;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 2rem;
+      text-align: center;
+      padding: 20px;
     }
-    h1 {
-      font-size: 2rem;
-      font-weight: 600;
+    .hidden {
+      display: none;
     }
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin: 1.5rem 0;
+    .fade {
+      transition: opacity 1s ease-in-out;
+    }
+    .fade-out {
+      opacity: 0;
+    }
+    .fade-in {
+      opacity: 1;
     }
     .btn {
-      background-color: #25D366;
+      //background-color: #007BFF;
+      background-color: #25D3366;
       color: white;
       border: none;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+      padding: 12px 24px;
+      font-size: 18px;
       border-radius: 8px;
       cursor: pointer;
-      text-decoration: none;
+      margin-top: 20px;
     }
     .btn:hover {
-      background-color: #1ebe5a;
+      background-color: #0056b3;
     }
     #countdown {
-      font-size: 1.2rem;
+      font-size: 20px;
+      margin: 20px 0;
       font-weight: 600;
-      margin: 1rem 0;
+      color: #333;
     }
-    audio {
-      margin-top: 2rem;
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
     }
   </style>
-
-  <!-- Google Analytics -->
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C07NXTP4YV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-C07NXTP4YV');
-  </script>
-</head>
-<body>
-  <div class="container" id="pantalla1">
-    <h1>Tu invitación especial está a punto de abrirse...</h1>
-    <button class="btn" onclick="mostrarInvitacion()">Abrir invitación</button>
-  </div>
-
-  <div class="container" id="pantalla2" style="display:none;">
-    <h1>¡Estás invitado!</h1>
-    <img src="invitacion.jpg" alt="Invitación" />
-    <div id="countdown"></div>
-    <button class="btn" onclick="confirmarPorWhatsApp()">Confirmar asistencia</button>
-    <audio controls autoplay loop>
-      <source src="musica.mp3" type="audio/mpeg">
-      Tu navegador no soporta la reproducción de audio.
-    </audio>
-  </div>
-
-  <script>
-    function mostrarInvitacion() {
-      document.getElementById('pantalla1').style.display = 'none';
-      document.getElementById('pantalla2').style.display = 'block';
-    }
 
     function trackWhatsAppClick() {
       gtag('event', 'whatsapp_click', {
         'event_category': 'engagement',
-        'event_label': 'Confirmar asistencia por WhatsApp'
+        'event_label': 'Confirmar asistencia'
       });
     }
 
@@ -98,26 +77,52 @@
       window.open("https://wa.me/34618210039?text=Confirmar%20asistencia", "_blank");
     }
 
-    // Cuenta atrás
-    const countdown = document.getElementById('countdown');
-    const targetDate = new Date("2025-09-27T00:00:00").getTime();
+    function showInvitation() {
+      document.getElementById("intro").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("intro").classList.add("hidden");
+        document.getElementById("invitation").classList.remove("hidden");
+        document.getElementById("invitation").classList.add("fade-in");
+      }, 1000);
+    }
 
-    setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
+    function startCountdown() {
+      const countDownDate = new Date("Sep 27, 2025 00:00:00").getTime();
+      const x = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("countdown").innerHTML = "¡Ya ha comenzado!";
+          return;
+        }
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("countdown").innerHTML =
+          days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      }, 1000);
+    }
 
-      if (distance < 0) {
-        countdown.innerHTML = "¡Es hoy!";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdown.innerHTML = `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
-    }, 1000);
+    window.onload = function() {
+      startCountdown();
+    }
   </script>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="musica.mp3" type="audio/mp3">
+  </audio>
+  <div id="intro" class="container fade">
+    <h2>Tu invitación especial está a punto de abrirse...</h2>
+    <button class="btn" onclick="showInvitation()">Abrir invitación</button>
+  </div>
+
+  <div id="invitation" class="container hidden fade">
+    <img src="invitacion.jpg" alt="Invitación" />
+    <div id="countdown"></div>
+    <button class="btn" onclick="confirmarPorWhatsApp()">Confirmar asistencia</button>
+  </div>
 </body>
 </html>
