@@ -60,6 +60,9 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C07NXTP4YV"></script>
   <script>
+    // Música
+    const musica = document.getElementById('musica');
+    
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -78,6 +81,7 @@
     }
 
     function showInvitation() {
+      musica.play();
       document.getElementById("intro").classList.add("fade-out");
       setTimeout(() => {
         document.getElementById("intro").classList.add("hidden");
@@ -111,9 +115,7 @@
   </script>
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="musica.mp3" type="audio/mp3">
-  </audio>
+  <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
   <div id="intro" class="container fade">
     <h2>Tu invitación especial está a punto de abrirse...</h2>
     <button class="btn" onclick="showInvitation()">Abrir invitación</button>
