@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    
+    <meta charset="UTF-8">
+    <title>Tu Invitación Especial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C07NXTP4YV"></script>
 <script>
@@ -10,8 +15,6 @@
 
   gtag('config', 'G-C07NXTP4YV');
 </script>
-    <meta charset="UTF-8">
-    <title>Tu Invitación Especial</title>
     <style>
         body {
             margin: 0;
@@ -76,9 +79,13 @@
     <img src="invitacion.jpg" alt="Tu invitación especial">
     <div id="contador2" class="contador"></div>
     <div style="margin-top: 20px;">
-        <a href="https://wa.me/34618210039?text=Confirmo%20asistencia" target="_blank">
-            <button>Confirmar Asistencia</button>
-        </a>
+        <a href="https://wa.me/34618210039?text=Confirmar%20asistencia"
+   class="whatsapp-button"
+   onclick="trackWhatsAppClick()"
+   target="_blank">
+  Confirmar asistencia
+</a>
+
     </div>
 </div>
 
@@ -119,6 +126,13 @@
     }
 
     setInterval(actualizarContador, 1000);
+
+    function trackWhatsAppClick() {
+    gtag('event', 'whatsapp_click', {
+      'event_category': 'engagement',
+      'event_label': 'Confirmar asistencia por WhatsApp'
+    });
+    }
 </script>
 
 </body>
