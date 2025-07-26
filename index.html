@@ -81,7 +81,6 @@
     }
 
     function showInvitation() {
-      musica.play();
       document.getElementById("intro").classList.add("fade-out");
       setTimeout(() => {
         document.getElementById("intro").classList.add("hidden");
@@ -110,6 +109,7 @@
     }
 
     window.onload = function() {
+      musica.play();
       startCountdown();
     }
   </script>
